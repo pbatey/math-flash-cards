@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "6bcad81360e2b4b6ff8793350c68643a",
+    "revision": "ed022e6a756b28ab0be0b78327ad3677",
     "url": "/math-flash-cards/index.html"
   },
   {
