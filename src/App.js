@@ -1,15 +1,18 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './App.css'
 import Confetti from 'react-dom-confetti'
+import Awards, { award } from './Awards'
 import Award from './Award'
+import Drawer from './Drawer'
+import NumPad from './NumPad'
 
 const confettiConfig = {
-  angle: 90,
-  spread: "90",
-  startVelocity: "50",
-  elementCount: "75",
+  angle: "90",
+  spread: "270",
+  startVelocity: "40",
+  elementCount: "100",
   dragFriction: 0.12,
-  duration: "5000",
+  duration: 3000,
   stagger: 3,
   width: "10px",
   height: "10px",
@@ -62,9 +65,16 @@ function App() {
   const [answer, setAnswer] = useState('')
   const [numCorrect, setNumCorrect] = useState(0)
   const [won, setWon] = useState(0)
+  const [showAward, setShowAward] = useState(false)
   const [showNext, setShowNext] = useState(false)
+  const [showNumPad, setShowNumPad] = useState(false)
+  const [numPadEver, setNumPadEver] = useState(false)
   const [message, setMessage] = useState('')
   const [color, setColor] = useState(randomColor())
+
+  useEffect(() => {
+    if (showNumPad) setNumPadEver(true)
+  }, [showNumPad])
 
   let maxAnswer = f(max,max)
   if (operator == '-') maxAnswer = f(max,min) * (onlyPositveAnswers ? 1 : -1)
@@ -77,6 +87,7 @@ function App() {
       setMessage("Yes, That's Right!")
       if (numCorrect+1 == numToWin) {
         setWon(won + 1)
+        setShowAward(true)
       }
     } else {
       setNumCorrect(0)
@@ -86,11 +97,13 @@ function App() {
   }
 
   const nextCard = () => {
+    setShowAward(false)
     setQuestion(randomQuestion())
     setAnswer('')
     setMessage('')
     setShowNext(false)
     setColor(randomColor(color))
+    if (numPadEver) setShowNumPad(true)
     if (numCorrect == numToWin) {
       setNumCorrect(0)
     }
@@ -98,45 +111,57 @@ function App() {
 
   const onKey = (e) => {
     e = e || window.event
-    console.log('onKey', e)
-    var key = e.keyCode || e.which
+    var keyCode = e.keyCode || e.which
 
-    if (key == 13 && answer.length > 0) {
+    if (keyCode == 13 && answer.length > 0) {
       if (message.length > 0) nextCard()
-      else confirmAnswer(answer)
+      else {
+        confirmAnswer(answer)
+        if (!showNumPad && numPadEver) setNumPadEver(false)
+        setShowNumPad(false)
+      }
       return
     }
-    if ((key == 8 || key == 46) && answer.length > 0) {
+    if ((keyCode == 8 || keyCode == 46) && answer.length > 0) {
       setAnswer(answer.substr(0,answer.length-1))
       return
     }
 
-    key = String.fromCharCode(key)
-    if (!onlyPositveAnswers && (key == '-' || key == '+')) {
+    keyCode = String.fromCharCode(keyCode)
+    if (!onlyPositveAnswers && (keyCode == '-' || keyCode == '+')) {
       if (answer[0] == '-') setAnswer(answer.substr(1))
-      else if (key != '+') setAnswer(key + answer)
+      else if (keyCode != '+') setAnswer(keyCode + answer)
       return
     }
     var regex = /[0-9]|\./
-    if(regex.test(key) && answer.length < maxLength) {
-      setAnswer(answer + key)
+    if(regex.test(keyCode) && answer.length < maxLength) {
+      setAnswer(answer + keyCode)
       return
     }
   }
 
   const showGo = !showNext && answer.length > 0 && f(max, max) >= 10
-  const messageClass = answer == correctAnswer ? 'correct' : 'incorrect'
+  const correct = showNext ? answer == correctAnswer ? 'correct' : 'incorrect' : ''
+  const tiny = showNumPad ? 'tiny' : null
+  const shown = showNumPad ? 'shown' : null
 
   const onClick = () => {
-    if (showGo) confirmAnswer(answer)
+    console.log('click root')
     if (showNext) nextCard()
+    else if (numPadEver) setShowNumPad(!showNumPad)
+    else if (showGo) confirmAnswer(answer)
+    else setShowNumPad(!showNumPad)
   }
 
   return (
-    <div className="App" onKeyDown={e=>onKey(e)} onClick={onClick} tabIndex="0">
-      <header className="App-header">
-        <div className={`${color} card`}>
-          <div className={`message ${messageClass}`}>{message}</div>
+    <div className="App" onKeyDown={e=>onKey(e)} tabIndex="0">
+
+      <div className="transparent panel">
+        <NumPad className={`${shown}`} onKey={onKey}/>
+      </div>
+      <div className="transparent panel">
+        <div className={`${color} card ${tiny} ${correct}`} onClick={onClick}>
+          <div className={`message`}>{message}</div>
           <div className="question">
             <div className="first line"><span className="x">{x}</span></div>
             <div className="second line"><span className="operator">{operatorSymbol[operator]}</span> <span className="y">{y}</span></div>
@@ -146,17 +171,27 @@ function App() {
           {showNext && <div className="action nextCard">Next Card</div>}
           {!showNext && !showGo && <div className="action none">&nbsp;</div>}
         </div>
+
         <div className="score">
-          <Confetti className="confetti" active={numCorrect == numToWin} config={confettiConfig} />
           {[...Array(numToWin)].map((e, i) => <StarOrDot key={i} i={i} numCorrect={numCorrect}/>)}
         </div>
-
-        <div className="awards">
-          {[...Array(won)].map((e, i) => <Award key={i} i={i} isNew={i == won-1}/>)}
-        </div>
-
         <div className="attribution">Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
-      </header>
+      </div>
+
+      <div className={`transparent panel`}>
+        <div>
+          &nbsp;
+          <Confetti className="confetti" active={numCorrect == numToWin} config={confettiConfig} />
+        </div>
+      </div>
+      <div className={`transparent panel`}>
+        {showAward && <Award className="big" name={award(won-1)} hideOnClick={true} onHidden={() => setShowAward(false)}/>}
+      </div>
+
+      <div className={`transparent panel`}>
+        <Drawer><Awards won={won}/></Drawer>
+      </div>
+
     </div>
   )
 }

@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #282c34;
 }
 
 code {
@@ -12,7 +13,30 @@ code {
     monospace;
 }
 
-.message {
+.panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.transparent.panel {
+  pointer-events: none;
+}
+.transparent.panel > * {
+  pointer-events: all;
+}
+
+.message, .action {
   min-height: 28px;
   min-width: 180px;
 }
@@ -43,6 +67,10 @@ code {
   border-radius: 30px;
 }
 
+.card.tiny {
+  transform: scale(.5) translate(0, -236px);
+}
+
 .star {
   color: #e0c53d;
 }
@@ -56,7 +84,7 @@ code {
   color: #fff;
 }
 .card.orange{
-  background-color: #b7651e;
+  background-color: #d16d15;
   color: #fff;
 }
 .card.yellow {
@@ -85,32 +113,88 @@ code {
 }
 .card { transition: all .5s ease-in-out; }
 
-.awards {
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  padding: 0;
-  overflow-y: scroll;
-}
-
-.award:first-child { margin-top: 80px; }
-.award:last-child { margin-bottom: 80px; }
 .award {
-  margin-left: auto;
-  margin-right: 80px;
+  display: inline;
+  margin: 8px;
   height: 60px;
   width: 60px;
   border-radius: 50%;
   background-color: #667;
   margin-bottom: 5px;
-  display: block;
 }
-.award { transition: all .2s ease-in-out; }
-.award:hover {
-  transform: scale(2.5);
+.award.hiding {
+  transform: scale(0);
 }
+.award { transition: all .5s ease-in-out; }
+.award.hover {
+  transform: scale(1.5);
+}
+.award.big {
+  width: 330px;
+  height: 330px;
+}
+
+.awards {
+  max-width: 610px;
+  margin: auto;
+  margin-top: 12px;
+}
+
+@keyframes pulse-green {
+  0%   { border-color: rgba(55, 205, 55, 1); }
+  50%  { border-color: rgba(0, 205, 255, 0); }
+  100% { border-color: rgba(55, 205, 55, 1); }
+}
+@keyframes pulse-red {
+  0%   { border-color: rgba(255, 55, 55, 1); }
+  50%  { border-color: rgba(0, 55, 255, 0); }
+  100% { border-color: rgba(255, 55, 55, 1); }
+}
+
+.card.correct {
+  background-clip: padding-box;
+  border: solid 5px #33dd33;
+  animation: pulse-green 2s infinite;
+}
+
+.card.incorrect {
+  background-clip: padding-box;
+  border: solid 5px #dd3333;
+  animation: pulse-red 2s infinite;
+}
+
+.drawer {
+  transition: left .5s ease-in-out;
+  border-left: solid 2px black;
+  position: fixed;
+  left: 100vw;
+  width: 100%;
+  top: 0;
+  bottom: 0;
+  padding-top: 12px;
+  overflow-y: scroll;
+  background-color: #282c34;;
+}
+.drawer.open {
+  left: 0;
+}
+
+.drawer-pull {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: black;
+  z-index: 100;
+  position: relative;
+  left: -50%;
+  top: -4px;
+  transition: transform .5s ease-in-out;
+  transform: translate(100vw, 0);
+}
+.drawer-pull.open {
+  transform: none;
+}
+
 
 .attribution {
   font-size: 10pt;
@@ -124,4 +208,80 @@ code {
 {
   color: #77947a;
   text-decoration: none;
+}
+
+.numpad .key {
+  background-color: #6b7288;
+  color: #fff;
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  border-radius: 50%;
+  display: inline-block;
+  margin: 3px;
+}
+
+.numpad {
+  position: fixed;
+  transform: scale(0);
+  transition: transform .5s ease-in-out;
+}
+
+.numpad.shown {
+  transform: scale(1) translate(0, 89px);
+}
+
+.numpad .key.backspace {
+  background-color: #000;
+}
+
+.numpad .key.enter {
+  background-color: #0f885b;
+}
+
+@media screen and ( max-height: 600px ){
+  .first.line::after {
+    content: ' ';
+  }
+  .second.line::after {
+    content: ' =';
+  }
+  .second.line {
+    margin-right: 12px;
+  }
+
+  .line {
+    font-size: 66pt;
+    display: inline;
+    text-align: left;
+  }
+  .question {
+    display: inline-block;
+    margin-bottom: 8px;
+    border-bottom: none;
+    min-width: 200px;
+  }
+
+  .star, .dot {
+    font-size: 20pt;
+    min-width: 27px;
+    display: inline-block;
+  }
+  .card {
+    min-width: 416px;
+    min-height: 250px;
+  }
+  .question, .answer {
+    margin: 45px 0;
+  }
+  .numpad.shown {
+    transform: scale(1) translate(150px, 0);
+  }
+  .card.tiny {
+    transform: scale(.5) translate(-250px, 0);
+  }
+
+  .awards {
+    padding-top: 20px;
+  }
 }
