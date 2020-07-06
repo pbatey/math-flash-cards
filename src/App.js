@@ -66,6 +66,7 @@ function App() {
   const [numCorrect, setNumCorrect] = useState(0)
   const [won, setWon] = useState(0)
   const [showAward, setShowAward] = useState(false)
+  const [hideAward, setHideAward] = useState(false)
   const [showNext, setShowNext] = useState(false)
   const [showNumPad, setShowNumPad] = useState(false)
   const [numPadEver, setNumPadEver] = useState(false)
@@ -97,7 +98,6 @@ function App() {
   }
 
   const nextCard = () => {
-    setShowAward(false)
     setQuestion(randomQuestion())
     setAnswer('')
     setMessage('')
@@ -114,7 +114,10 @@ function App() {
     var keyCode = e.keyCode || e.which
 
     if (keyCode == 13 && answer.length > 0) {
-      if (message.length > 0) nextCard()
+      if (showAward && message.length > 0) {
+        setHideAward(true)
+      }
+      else if (message.length > 0) nextCard()
       else {
         confirmAnswer(answer)
         if (!showNumPad && numPadEver) setNumPadEver(false)
@@ -147,7 +150,10 @@ function App() {
 
   const onClick = () => {
     console.log('click root')
-    if (showNext) nextCard()
+    if (showNext) {
+      setHideAward(true)
+      nextCard()
+    }
     else if (numPadEver) setShowNumPad(!showNumPad)
     else if (showGo) confirmAnswer(answer)
     else setShowNumPad(!showNumPad)
@@ -185,7 +191,7 @@ function App() {
         </div>
       </div>
       <div className={`transparent panel`}>
-        {showAward && <Award className="big" name={award(won-1)} hideOnClick={true} onHidden={() => setShowAward(false)}/>}
+        {showAward && <Award className={`big toDrawer`} name={award(won-1)} hideAward={hideAward} hideOnClick={true} onHidden={() => {setHideAward(false); setShowAward(false)}}/>}
       </div>
 
       <div className={`transparent panel`}>

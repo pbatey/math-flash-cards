@@ -1,16 +1,19 @@
 import React, { seState, useState, useEffect } from 'react'
 
-const Award = ({name, className, onClick, hideOnClick, onHidden, hover}) => {
+const Award = ({name, className, onClick, hideOnClick, hideAward, onHidden, hover}) => {
   const [hovering, setHovering] = useState(false)
   const [hiding, setHiding] = useState(false)
 
   useEffect(() => {
+    if (hideAward) setHiding(true)
+  }, [hideAward])
+
+  useEffect(() => {
     let handle
     if (hiding) handle = setTimeout(() => {
-      setHiding(false)
       if (onHidden) onHidden()
+      setHiding(false)
     }, 500)
-    return () => clearTimeout(handle)
   }, [hiding])
 
   const handleClick = () => {

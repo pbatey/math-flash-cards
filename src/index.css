@@ -125,6 +125,9 @@ code {
 .award.hiding {
   transform: scale(0);
 }
+.award.hiding.toDrawer {
+  transform: translate(100vw, 0) scale(.1);
+}
 .award { transition: all .5s ease-in-out; }
 .award.hover {
   transform: scale(1.5);
