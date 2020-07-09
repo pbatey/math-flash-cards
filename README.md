@@ -4,7 +4,7 @@ A simple math game. Get three in a row and get an award!
 
 ## Demo
 
-View the application [here](https://pbatey.github.io/math-flash-cards/).
+View the deno [here](https://pbatey.github.io/math-flash-cards/).
 
 ## Acknowlegements
 
