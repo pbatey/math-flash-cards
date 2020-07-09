@@ -20,9 +20,31 @@ const confettiConfig = {
   colors: ["#cd3e44", "#b7651e", "#c4a71b", "#0f885b", "#0f8187", "#1176b8", "#5161a2", "#e3477c"],
 }
 
+const difficulty = {
+  '+': {
+    easy: {min: [0,0], max: [12,12]},
+    medium: {min: [10,0], max: [90,10]},
+    hard: {min: [10,10], max: [50,50]},
+  },
+  '-': {
+    easy: {min: [0,0], max: [12,12]},
+    medium: {min: [10,0], max: [90,10]},
+    hard: {min: [10,10], max: [50,50]},
+  },
+  '*': {
+    easy: {min: [0,0], max: [5,5]},
+    medium: {min: [0,0], max: [12,12]},
+    hard: {min: [10,2], max: [20,10]},
+  },
+  '/': {
+    easy: {min: [0,0], max: [5,5]},
+    medium: {min: [0,0], max: [12,12]},
+    hard: {min: [10,2], max: [20,10]},
+  },
+}
+
 const config = {
-  min: 0,
-  max: 50,
+  level: { '+': 'hard', '-': 'easy', '*': 'easy', '/': 'easy' },
   operators: ['+','-'], // ['+', '-', '/', '*'] supported
   numToWin: 3,
   onlyPositveAnswers: true,
@@ -34,12 +56,14 @@ function App() {
 
   const operatorSymbol = {'*': <span>&times;</span>, '/': <span>&#xF7;</span>, '+':'+', '-':'-'}
 
-  const randomNumber = () => Math.floor(Math.random() * (max-min)) + min
+  const randomNumber = (min, max) => Math.floor(Math.random() * 1.1 * (max-min)) + min
   const randomOperator = () => operators[Math.floor(Math.random() * operators.length)]
   const randomQuestion = () => {
-    let x = randomNumber()
-    let operator = randomOperator()
-    let y = randomNumber()
+    const operator = randomOperator()
+    const {min, max} = difficulty[operator][config.level[operator]]
+    let x = randomNumber(min[0], max[0])
+    let y = randomNumber(min[1], max[1])
+    console.log('x,y', x,y)
     if (onlyPositveAnswers && operator == '-' && (y > x)) {[x,y] = [y,x]} // flip
     if (operator == '/') {
       if (x == 0 && y == 0) y = 1

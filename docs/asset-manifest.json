@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/math-flash-cards/static/css/main.025badf6.chunk.css",
-    "main.js": "/math-flash-cards/static/js/main.0fe1b705.chunk.js",
-    "main.js.map": "/math-flash-cards/static/js/main.0fe1b705.chunk.js.map",
+    "main.js": "/math-flash-cards/static/js/main.df902685.chunk.js",
+    "main.js.map": "/math-flash-cards/static/js/main.df902685.chunk.js.map",
     "runtime-main.js": "/math-flash-cards/static/js/runtime-main.f8fa5eb8.js",
     "runtime-main.js.map": "/math-flash-cards/static/js/runtime-main.f8fa5eb8.js.map",
     "static/js/2.62aee62f.chunk.js": "/math-flash-cards/static/js/2.62aee62f.chunk.js",
     "static/js/2.62aee62f.chunk.js.map": "/math-flash-cards/static/js/2.62aee62f.chunk.js.map",
     "index.html": "/math-flash-cards/index.html",
-    "precache-manifest.93256bf93c0f7cf1b0b000396a7f7be7.js": "/math-flash-cards/precache-manifest.93256bf93c0f7cf1b0b000396a7f7be7.js",
+    "precache-manifest.77d0b65346fbef3b238693ab69a5617c.js": "/math-flash-cards/precache-manifest.77d0b65346fbef3b238693ab69a5617c.js",
     "service-worker.js": "/math-flash-cards/service-worker.js",
     "static/css/main.025badf6.chunk.css.map": "/math-flash-cards/static/css/main.025badf6.chunk.css.map",
     "static/js/2.62aee62f.chunk.js.LICENSE.txt": "/math-flash-cards/static/js/2.62aee62f.chunk.js.LICENSE.txt"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.f8fa5eb8.js",
     "static/js/2.62aee62f.chunk.js",
     "static/css/main.025badf6.chunk.css",
-    "static/js/main.0fe1b705.chunk.js"
+    "static/js/main.df902685.chunk.js"
   ]
 }
