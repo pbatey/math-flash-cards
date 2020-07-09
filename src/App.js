@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import './App.css'
 import Confetti from 'react-dom-confetti'
-import Awards, { award } from './Awards'
+import Awards, { awardPic } from './Awards'
 import Award from './Award'
 import Drawer from './Drawer'
 import NumPad from './NumPad'
@@ -44,7 +44,7 @@ function App() {
     if (operator == '/') {
       if (x == 0 && y == 0) y = 1
       if (y == 0) {[x,y] = [y,x]} // flip
-      [x,y] = [x*y,y] // flip numerator and answer
+      x = x*y // flip numerator and answer
     }
     return [x,operator,y]
   }
@@ -52,13 +52,14 @@ function App() {
     console.log('randomColor', color, colors)
     const last = color ? colors.indexOf[color] : 0
     const r = Math.floor(Math.random() * (colors.length-1))
-    const next = ((last||0) + r) % colors.length
+    const next = ((last||0) + 1 + r) % colors.length
     const c = colors[next]
     console.log('last', last, 'r', r, 'next', next, 'c', c)
     return c
   }
 
   const [[x,operator,y], setQuestion] = useState(randomQuestion())
+  // eslint-disable-next-line no-new-func
   const f = new Function('x', 'y', `return x ${operator} y;`)
   const correctAnswer = f(x, y)
 
@@ -72,6 +73,7 @@ function App() {
   const [numPadEver, setNumPadEver] = useState(false)
   const [message, setMessage] = useState('')
   const [color, setColor] = useState(randomColor())
+  const [awardType, setAwardType] = useState('zoo-animals')
 
   useEffect(() => {
     if (showNumPad) setNumPadEver(true)
@@ -115,6 +117,7 @@ function App() {
 
     if (keyCode == 13 && answer.length > 0) {
       if (showAward && message.length > 0) {
+        console.log('hide 1')
         setHideAward(true)
       }
       else if (message.length > 0) nextCard()
@@ -151,6 +154,7 @@ function App() {
   const onClick = () => {
     console.log('click root')
     if (showNext) {
+      console.log('hide 2')
       setHideAward(true)
       nextCard()
     }
@@ -191,11 +195,13 @@ function App() {
         </div>
       </div>
       <div className={`transparent panel`}>
-        {showAward && <Award className={`big toDrawer`} name={award(won-1)} hideAward={hideAward} hideOnClick={true} onHidden={() => {setHideAward(false); setShowAward(false)}}/>}
+        <Award className={`big toDrawer ${showAward ? 'visible' : 'hidden'}`} name={awardPic(awardType, won-1)} hideAward={hideAward} hideOnClick={true} onHidden={() => {
+          console.log('hide 3')
+          setHideAward(false); setShowAward(false)}}/>
       </div>
 
       <div className={`transparent panel`}>
-        <Drawer><Awards won={won}/></Drawer>
+        <Drawer><Awards type={awardType} won={won}/></Drawer>
       </div>
 
     </div>

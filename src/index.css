@@ -113,6 +113,9 @@ code {
 }
 .card { transition: all .5s ease-in-out; }
 
+.award.hidden {
+  display: none;
+}
 .award {
   display: inline;
   margin: 8px;

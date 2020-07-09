@@ -9,8 +9,7 @@ const Award = ({name, className, onClick, hideOnClick, hideAward, onHidden, hove
   }, [hideAward])
 
   useEffect(() => {
-    let handle
-    if (hiding) handle = setTimeout(() => {
+    if (hiding) setTimeout(() => {
       if (onHidden) onHidden()
       setHiding(false)
     }, 500)
