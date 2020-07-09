@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "c453aa216cef52f021e7e26ebb1d8bb7",
+    "revision": "ee915a7457011647be4d0027be555e48",
     "url": "/math-flash-cards/index.html"
   },
   {
-    "revision": "152c8c87ff6f9ef8497c",
+    "revision": "847c8649470b82a46696",
     "url": "/math-flash-cards/static/css/main.025badf6.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/math-flash-cards/static/js/2.62aee62f.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "152c8c87ff6f9ef8497c",
-    "url": "/math-flash-cards/static/js/main.c1bd6a13.chunk.js"
+    "revision": "847c8649470b82a46696",
+    "url": "/math-flash-cards/static/js/main.0fe1b705.chunk.js"
   },
   {
     "revision": "b8e44ac9828e4b354fe3",

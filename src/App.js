@@ -22,8 +22,8 @@ const confettiConfig = {
 
 const config = {
   min: 0,
-  max: 12,
-  operators: ['+'], // ['+', '-', '/', '*'] supported
+  max: 50,
+  operators: ['+','-'], // ['+', '-', '/', '*'] supported
   numToWin: 3,
   onlyPositveAnswers: true,
   colors: ['red', 'orange', 'yellow', 'green', 'cyan', 'blue', 'purple', 'pink'], // matches card colors in index.css
