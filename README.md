@@ -34,3 +34,14 @@ The build is minified and the filenames include the hashes.<br />
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+## TODO
+
+1. Add parental controls for difficulty setting.
+2. Explain settings (i.e. "0-12", 2-digits + 1-digit, 2-digit questions up to 100)
+3. Add backwards answering (kids figure 1's before 10's place)
+4. Add hints for carry and borrow
+5. Tune difficulty settings for multiplication/division
+6. Use LocalStorage for wins
+7. Add reset button for wins in parental controls
+8. Add audio for correct/incorrect, and win-award. key-clicks?
